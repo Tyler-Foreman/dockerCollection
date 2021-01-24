@@ -9,7 +9,7 @@ networks:
         - subnet: 12.12.0.0/16
 
 services:
-  postgres-usage-db:
+  postgres-db:
   #alpine versions of images tend to be more secure.
       image: postgres:12.4-alpine
       restart: always
@@ -33,3 +33,26 @@ services:
         - docker-network
       security_opt:
         - seccomp:unconfined
+        
+        
+  pgadmin-console:
+      image: dpage/pgadmin4
+      container_name: pgadmin-console
+      depends_on:
+        - postgres-db
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@admin.com
+        PGADMIN_DEFAULT_PASSWORD: changeme
+        PGADMIN_LISTEN_PORT: 8088
+      expose:
+        - 8088
+      ports:
+        - "8088:8088"
+      networks:
+        - docker-network
+      volumes:
+        - pgadmin:/root/.pgadmin  
+
+
+volumes:
+  pgadmin:
