@@ -52,7 +52,7 @@ services:
         - docker-network
       volumes:
         - pgadmin:/root/.pgadmin  
-
+        - C:\Users\ian.rubenstein\repos\dockerCollection\sample_data:/data_import/:cached
 
 volumes:
   pgadmin:
